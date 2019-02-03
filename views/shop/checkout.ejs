@@ -1,0 +1,48 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/cart.css" />
+    <link rel="stylesheet" href="/stylesheets/forms.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+          <ul class="cart__item-list">
+              <% products.forEach(p => { %>
+                  <li class="cart__item">
+                      <h1><%= p.title %></h1>
+                      <h2>Quantity: <%= p.quantity %></h2>
+                      <h2>Item Price: <%= p.productPrice %></h2>
+                  </li>
+              <% }) %>
+          </ul>
+          <form action="/create-order" method="POST">
+                <ul class="cart__item-list">
+                  <div class="form-control">
+                    <label for="orderTotal"><h2>Total: ($)</h2></label>
+                    <input type="number" name="orderTotal" step="0.01" id="orderTotal" value="<%= totalPrice %>">
+                  </div> <br />
+                  <li class="cart__item">
+                      <h1>Adjusted:</h1>
+                      <h2>
+                        <select name="adjustedTotal" id="adjustedTotal">
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+                      </h2>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label for="checkoutNotes">Order Notes:</label>
+                      <textarea name="checkoutNotes" rows="5" placeholder="Enter sale information here"></textarea>
+                    </div>
+
+                  </li>
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <div class="centered">
+                    <button type="submit" class="btn">Place Order</button>
+                  </div>
+                </ul>
+            </form>
+
+        </main>
+        <%- include('../includes/end.ejs') %>

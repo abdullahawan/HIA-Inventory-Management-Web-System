@@ -1,0 +1,49 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/forms.css">
+    <link rel="stylesheet" href="/stylesheets/product.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <form class="product-form" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST">
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" value="<% if (editing) { %><%= product.title %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="imageUrl">Image URL</label>
+                <input type="text" name="imageUrl" id="imageUrl" value="<% if (editing) { %><%= product.image_url %><% } else { %>#<% } %>">
+            </div>
+            <div class="form-control">
+                <label for="brand">Brand</label>
+                <input type="text" name="brand" id="brand" value="<% if (editing) { %><%= product.brand %><% } else { %>#<% } %>">
+            </div>
+            <div class="form-control">
+                <label for="cost">Cost</label>
+                <input type="number" name="cost" id="cost" step="0.01" value="<% if (editing) { %><%= product.cost %><% } else { %>0<% } %>">
+            </div>
+            <div class="form-control">
+                <label for="price">Price</label>
+                <input type="number" name="price" id="price" step="0.01" value="<% if (editing) { %><%= product.price %><% } else { %>0<% } %>">
+            </div>
+            <div class="form-control">
+                <label for="fairlane_quantity">Fairlane Quantity</label>
+                <input type="number" name="fairlane_quantity" id="fairlane_quantity" value="<% if (editing) { %><%= product.fairlane_quantity %><% } else { %>0<% }%>">
+            </div>
+            <div class="form-control">
+                <label for="detroit_quantity">Detroit Quantity</label>
+                <input type="number" name="detroit_quantity" id="detroit_quantity" value="<% if (editing) { %><%= product.detroit_quantity %><% } else { %>0<% }%>">
+            </div>
+
+            <% if (editing) { %>
+              <input type="hidden" value="<%= product.product_id %>" name="productId">
+              <input type="hidden" value="<%= product.timestamp %>" name="timeStamp">
+            <% } %>
+
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"><% if (editing) { %>Update Product<% } else { %>Add Product<% } %></button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>

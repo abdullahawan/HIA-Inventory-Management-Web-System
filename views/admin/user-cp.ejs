@@ -1,0 +1,45 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link rel="stylesheet" href="/stylesheets/product.css">
+    <link rel="stylesheet" href="/stylesheets/forms.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <div>
+          <h1>Hello, <%= userName %></h1>
+        </div>
+        <hr />
+
+          <form class="product-form" action="/admin/user-cp/update-store-location" method="POST">
+            <div class="form-control">
+              <% if (user.storeLocation) { %>
+                <p>Your current store is: <%= user.storeLocation %></p>
+              <% } %>
+              <label for="storeLocation">Choose your store:</label>
+              <select name="store_location">
+                <option value="fairlane">Fairlane</option>
+                <option value="detroit">Detroit</option>
+              </select>
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" class="btn">Update Store Location</button>
+          </form> <br />
+
+        <hr />
+
+        <form class="product-form" action="/admin/user-cp/update-user-info" method="POST">
+          <div class="form-control">
+            <label for="user_name">Enter your name:</label>
+            <input type="string" name="user_name" id="user_name" value="<%= user.name %>"/>
+          </div>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit" class="btn">Update User Info</button>
+        </form><br />
+
+        <hr />
+
+    </main>
+<%- include('../includes/end.ejs') %>

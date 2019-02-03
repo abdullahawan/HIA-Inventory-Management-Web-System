@@ -1,0 +1,26 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/orders.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+            <% if (orders.length <= 0) { %>
+                <h1>Nothing there!</h1>
+            <% } else { %>
+                <ul class="orders">
+                    <% orders.forEach(order => { %>
+                        <li class="orders__item">
+                            <h1>Order - <%= new Date(order.timestamp * 1000).toLocaleString() %> | # <%= order.order_id %> | Sold by: <%= order.user.name %> | Total Sale: $<%= order.order_total %> | Adjusted: <%= order.is_order_adjusted %></h1>
+                            <ul class="orders__products">
+                                <% order.items.forEach(product => { %>
+                                    <li class="orders__products-item"><%= product.title %> (<%= product.quantity %>) | Brand: <%= product.brand %></li>
+                                <% }); %>
+                            </ul>
+                            <a class="btn" href="/orders/<%= order.order_id %>?oId=<%= order.order_id %>&ts=<%= order.timestamp %>">View Order Details</a>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </main>
+        <%- include('../includes/end.ejs') %>

@@ -1,0 +1,43 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if (prods.length > 0) { %>
+            <div class="grid">
+                <% for (var i = 0; i < prods.length; i++) { %>
+                    <article class="card product-item">
+                        <header class="card__header">
+                            <h1 class="product__title"><%= prods[i].title %></h1>
+                        </header>
+                        <div class="card__content">
+                          <p class="product__description">
+                            Brand: <b><%= prods[i].brand %></b>
+                          </p>
+                        </div>
+                        <div class="card__image">
+                            <img src="<%= prods[i].image_url %>"
+                                alt="<%= prods[i].title %>">
+                        </div>
+                        <div class="card__content">
+                            <h2 class="product__price">$<%= prods[i].price %></h2>
+                            <p class="product__description">Fairlane Quantity: <%= prods[i].fairlane_quantity %> <br />
+                              Detroit Quantity: <%= prods[i].detroit_quantity %></p>
+                        </div>
+                        <div class="card__actions">
+                          <a href="/products/<%= prods[i].product_id %>?ts=<%= prods[i].timestamp %>&pId=<%= prods[i].product_id %>" class="btn">Details</a>
+                          <% if (isAuthenticated) { %>
+                            <%- include('../includes/add-to-cart.ejs', {product: prods[i]}) %>
+                          <% } %>
+                        </div>
+                    </article>
+                <% } %>
+            </div>
+        <% } else { %>
+            <h1>No Products Found!</h1>
+        <% } %>
+    </main>
+<%- include('../includes/end.ejs') %>
