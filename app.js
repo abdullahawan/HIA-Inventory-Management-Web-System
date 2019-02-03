@@ -9,9 +9,14 @@ const DynamoDBStore = require('connect-dynamodb')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
+const AWS = require('aws-sdk');
+AWS.config.update({region: 'us-east-1'});
+
 var adminRouter = require('./routes/admin');
 var shopRouter = require('./routes/shop');
 var authRouter = require('./routes/auth');
+
+const User = require('./models/users');
 
 var app = express();
 
